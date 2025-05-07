@@ -16,7 +16,7 @@
   }
 
   input.input-submit {
-    background: #79ffd5 url("public/ion_search-outline.svg") no-repeat scroll center;
+    background: #79ffd5 url("../public/ion_search-outline.svg") no-repeat scroll center;
     background-size: 24px 24px;
     width: 38px;
     height: 38px;

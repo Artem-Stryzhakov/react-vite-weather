@@ -1,4 +1,4 @@
-import "./DisplayMainWeather.css"
+import "./styles/DisplayMainWeather.css"
 
 function DisplayFutureWeather(props) {
     return (
