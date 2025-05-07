@@ -5,8 +5,8 @@ function DisplayFutureWeather(props) {
         <div className="containers temp-data">
             <img src={`http://openweathermap.org/img/w/${props.iconCode}.png`} alt="icon"/>
             <div className="containers">
-                <h1 className={"title"}>{Math.round(props.temperature)}°</h1>
-                <span>{props.weatherStatus}</span>
+                <h2 className={"title"}>{Math.round(props.temperature)}°</h2>
+                {/*<span>{props.weatherStatus}</span>*/}
             </div>
         </div>
     )

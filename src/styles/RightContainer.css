@@ -1,0 +1,30 @@
+.right-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .param-block {
+        display: flex;
+
+        .icon-ram {
+            display: flex;
+            justify-content: center;
+            width: 32px;
+            height: auto;
+            margin-right: 10px;
+
+            .icon {
+                height: 24px;
+            }
+        }
+
+        .status-info {
+            display: flex;
+            flex-direction: column;
+
+            h3, p {
+                margin: 0;
+            }
+        }
+    }
+}
