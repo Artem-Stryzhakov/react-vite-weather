@@ -7,14 +7,11 @@ function SearchWeatherForm(props) {
         props.setCityName(e.target[0].value);
         props.setFormSubmit(true);
         e.target.reset()
-
-        console.log("Form submitted")
     }
 
     return (
         <form action="#" className={"search-weather"} onSubmit={formHandler}>
             <input type="text" placeholder="Enter city name..." className={"search-input"} />
-            {/*<input type="submit" value={""} className={"input-submit"} />*/}
             <button className={"btn-submit"} type="submit">
                 <FontAwesomeIcon className={"FontAwesomeIcon"} icon="fa-solid fa-magnifying-glass"/>
             </button>

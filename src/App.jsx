@@ -27,9 +27,9 @@ function App() {
     const [weatherDesc, setWeatherDesc] = useState("");
 
     useEffect(() => {
-        axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${weather_api}&units=metric&cnt=7`)
+        axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${weather_api}&units=metric`)
           .then(response => {
-            setWeatherData(response.data.list);
+            setWeatherData(response.data.list.filter((_, index) => index % 8 === 0));
             setCityData(response.data.city);
             setIsLoading(false);
             console.log(response.data);
@@ -74,6 +74,7 @@ function App() {
                         key={i}
                         time={data.dt_txt.split(" ")[1]}
                         temperature={data.main.temp}
+                        feels_like={data.main.feels_like}
                     />
                 )}
             </div>

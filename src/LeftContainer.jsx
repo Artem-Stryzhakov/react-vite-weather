@@ -8,9 +8,8 @@ function LeftContainer(props) {
                 <img src={`http://openweathermap.org/img/w/${props.weatherData}.png`} alt="icon"/>
                 <h1 className={"main-status"}>{props.status}</h1>
                 <div className="location-time-info">
-                    {/*<i className="fa-solid fa-location-dot"></i>*/}
                     <FontAwesomeIcon icon="fa-solid fa-location-dot" />
-                    <h5 className={"title"}>{props.city}</h5>
+                    <h1 className={"title"}>{props.city}</h1>
                 </div>
             </div>
             <h1 className={"main-temp"}>{Math.round(props.temperature)}°C</h1>
