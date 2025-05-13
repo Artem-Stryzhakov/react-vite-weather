@@ -7,6 +7,8 @@ function SearchWeatherForm(props) {
         props.setCityName(e.target[0].value);
         props.setFormSubmit(true);
         e.target.reset()
+
+        console.log("Form submitted")
     }
 
     return (

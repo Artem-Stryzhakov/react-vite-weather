@@ -3,6 +3,7 @@ import axios from "axios";
 import DisplayFutureWeather from "./DisplayFutureWeather.jsx";
 import SearchWeatherForm from "./SearchWeatherForm.jsx";
 import LeftContainer from "./LeftContainer.jsx";
+import ParameterWeather from "./ParameterWeather.jsx";
 import Loader from "./Loader.jsx";
 
 import './styles/App.css'
@@ -11,7 +12,6 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFontAwesome } from '@fortawesome/free-brands-svg-icons'
-import RightContainer from "./RightContainer.jsx";
 
 library.add(fas, faTwitter, faFontAwesome)
 
@@ -20,7 +20,7 @@ function App() {
 
     const [weatherData, setWeatherData] = useState([])
     const [cityData, setCityData] = useState([]);
-    const [cityName, setCityName] = useState("Tallinn");
+    const [cityName, setCityName] = useState("Minsk");
     const [isLoading, setIsLoading] = useState(true);
     const [formSubmit, setFormSubmit] = useState(false);
 
@@ -34,6 +34,7 @@ function App() {
             setIsLoading(false);
             console.log(response.data);
             setWeatherDesc(response.data.list[0].weather[0].main);
+            setFormSubmit(false)
           })
             .catch(error => {
                 console.log(error);
@@ -61,11 +62,9 @@ function App() {
                 </div>
 
                 <div className={"right-section"}>
-                    <RightContainer
-                        humidity={weatherData[0].main.humidity}
-                        air_pressure={weatherData[0].main.pressure}
-                        wind_speed={weatherData[0].wind.speed}
-                    />
+                    <ParameterWeather iconClass={"fa-solid fa-droplet"} parameterName={"Humidity"} parameterWeather={`${weatherData[0].main.humidity}%`}/>
+                    <ParameterWeather iconClass={"fa-solid fa-cloud"} parameterName={"Air Pressure"} parameterWeather={`${weatherData[0].main.pressure} PS`}/>
+                    <ParameterWeather iconClass={"fa-solid fa-wind"} parameterName={"Wind Speed"} parameterWeather={`${weatherData[0].wind.speed} km/h`}/>
                 </div>
             </section>
 
@@ -73,11 +72,8 @@ function App() {
                 {weatherData.map((data, i) =>
                     <DisplayFutureWeather
                         key={i}
-                        cityName={cityData.name}
-                        country={cityData.country}
-                        iconCode={data.weather[0].icon}
+                        time={data.dt_txt.split(" ")[1]}
                         temperature={data.main.temp}
-                        weatherStatus={data.weather[0].description}
                     />
                 )}
             </div>
