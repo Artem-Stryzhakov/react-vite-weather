@@ -5,6 +5,7 @@ import SearchWeatherForm from "./SearchWeatherForm.jsx";
 import LeftContainer from "./LeftContainer.jsx";
 import ParameterWeather from "./ParameterWeather.jsx";
 import Loader from "./Loader.jsx";
+import Error from "./Error.jsx";
 
 import './styles/App.css'
 
@@ -21,23 +22,28 @@ function App() {
     const [weatherData, setWeatherData] = useState([])
     const [cityData, setCityData] = useState([]);
     const [cityName, setCityName] = useState("Minsk");
-    const [isLoading, setIsLoading] = useState(true);
     const [formSubmit, setFormSubmit] = useState(false);
-
     const [weatherDesc, setWeatherDesc] = useState("");
+
+    const [isLoading, setLoading] = useState(true);
+    const [isError, setError] = useState(false);
+    const [errorStatus, setErrorStatus] = useState("");
 
     useEffect(() => {
         axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${weather_api}&units=metric`)
           .then(response => {
+            setError(false);
+            setLoading(false);
             setWeatherData(response.data.list.filter((_, index) => index % 8 === 0));
             setCityData(response.data.city);
-            setIsLoading(false);
             console.log(response.data);
             setWeatherDesc(response.data.list[0].weather[0].main);
-            setFormSubmit(false)
+            setFormSubmit(false);
           })
             .catch(error => {
                 console.log(error);
+                setError(true)
+                setErrorStatus(error.code)
             })
     }, [formSubmit]);
 
@@ -45,6 +51,9 @@ function App() {
 
     return (
         <div className={"main-container"}>
+
+            {isError ? <Error errorStatus={errorStatus}/> : null}
+
             <section className={"top-section"}>
                 <div className={"left-container"}>
                     <div className={"location-info"}>
@@ -72,7 +81,7 @@ function App() {
                 {weatherData.map((data, i) =>
                     <DisplayFutureWeather
                         key={i}
-                        time={data.dt_txt.split(" ")[1]}
+                        dateFormat={data.dt_txt.split(" ")[0]}
                         temperature={data.main.temp}
                         feels_like={data.main.feels_like}
                     />

@@ -14,10 +14,11 @@
     }
 
     &:first-child {
-        box-shadow: 0 4px 20px 4px rgba(0, 0, 0, 0.2), 0 6px 20px 4px rgba(0, 0, 0, 0.19);
+        box-shadow: 0 4px 20px 4px rgb(140 140 140 / 20%), 0 6px 20px 4px rgb(60 60 60 / 20%);
         border-radius: 6px;
         padding: 10px 15px;
         width: 140px;
+        backdrop-filter: blur(5px);
 
         .container {
             height: 100%;
