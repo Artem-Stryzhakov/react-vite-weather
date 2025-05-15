@@ -59,6 +59,7 @@ function App() {
                     <div className={"location-info"}>
                         <LeftContainer
                             weatherData={weatherData[0].weather[0].icon}
+                            time={weatherData[0].dt_txt.split(" ")[1]}
                             status={weatherDesc.charAt(0).toUpperCase() + weatherDesc.slice(1)}
                             city={cityData.name}
                             temperature={weatherData[0].main.temp}

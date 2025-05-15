@@ -1,5 +1,5 @@
 .location-info {
-    .icon-status {
+    .status-block {
         display: flex;
         flex-direction: column;
 
@@ -24,12 +24,28 @@
 
     .main-status {
         font-size: 28px;
-        margin: 0;
+        margin: -6px 0 0;
     }
 
-    .main-temp {
-        font-size: 48px;
-        font-weight: 800;
-        margin: 5px 0;
+    .time-temp {
+        display: flex;
+        flex-direction: column;
+        margin-top: 16px;
+
+        .time {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+
+            p {
+                margin: 0;
+            }
+        }
+
+        .main-temp {
+            font-size: 48px;
+            font-weight: 800;
+            margin: -5px 0 0;
+        }
     }
 }
