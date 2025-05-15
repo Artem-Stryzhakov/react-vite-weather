@@ -27,7 +27,7 @@ function App() {
 
     const [isLoading, setLoading] = useState(true);
     const [isError, setError] = useState(false);
-    const [errorStatus, setErrorStatus] = useState("");
+    const [errorInfo, setErrorInfo] = useState("");
 
     useEffect(() => {
         axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${weather_api}&units=metric`)
@@ -43,7 +43,7 @@ function App() {
             .catch(error => {
                 console.log(error);
                 setError(true)
-                setErrorStatus(error.code)
+                setErrorInfo(error)
             })
     }, [formSubmit]);
 
@@ -52,7 +52,7 @@ function App() {
     return (
         <div className={"main-container"}>
 
-            {isError ? <Error errorStatus={errorStatus}/> : null}
+            {isError ? <Error errorStatus={errorInfo.code} errorMessage={errorInfo.response.data.message}/> : null}
 
             <section className={"top-section"}>
                 <div className={"left-container"}>

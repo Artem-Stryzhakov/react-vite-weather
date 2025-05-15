@@ -2,9 +2,12 @@ import "./styles/Error.css"
 
 function Error(props) {
     return (
-        <div className={"modal-error"}>
-            <p>{props.errorStatus}</p>
-            <button onClick={location.reload}>Reload</button>
+        <div className={"dark-window"}>
+            <div className={"modal-error"}>
+                <p>{props.errorStatus}</p>
+                <p>{props.errorMessage}</p>
+                <button onClick={window.location.reload.bind(window.location)}>Reload</button>
+            </div>
         </div>
     )
 }
