@@ -21,6 +21,10 @@
   }
 }
 
+.left-container, .right-container {
+  width: 140px;
+}
+
 .search-weather {
   display: flex;
   gap: 10px;
@@ -46,6 +50,11 @@
     border: none;
     border-radius: 100%;
     cursor: pointer;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      background-color: #1f8dd6;
+    }
 
     .FontAwesomeIcon {
       color: white;

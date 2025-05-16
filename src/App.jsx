@@ -36,12 +36,12 @@ function App() {
             setLoading(false);
             setWeatherData(response.data.list.filter((_, index) => index % 8 === 0));
             setCityData(response.data.city);
-            console.log(response.data);
+            // console.log(response.data);
             setWeatherDesc(response.data.list[0].weather[0].main);
             setFormSubmit(false);
           })
             .catch(error => {
-                console.log(error);
+                // console.log(error);
                 setError(true)
                 setErrorInfo(error)
             })
@@ -52,7 +52,7 @@ function App() {
     return (
         <div className={"main-container"}>
 
-            {isError ? <Error errorStatus={errorInfo.code} errorMessage={errorInfo.response.data.message}/> : null}
+            {isError ? <Error errorStatus={errorInfo.status} errorMessage={errorInfo.response.data.message}/> : null}
 
             <section className={"top-section"}>
                 <div className={"left-container"}>
@@ -71,7 +71,7 @@ function App() {
                     <SearchWeatherForm setCityName={setCityName} setFormSubmit={setFormSubmit}/>
                 </div>
 
-                <div className={"right-section"}>
+                <div className={"right-container"}>
                     <ParameterWeather iconClass={"fa-solid fa-droplet"} parameterName={"Humidity"} parameterWeather={`${weatherData[0].main.humidity}%`}/>
                     <ParameterWeather iconClass={"fa-solid fa-cloud"} parameterName={"Air Pressure"} parameterWeather={`${weatherData[0].main.pressure} PS`}/>
                     <ParameterWeather iconClass={"fa-solid fa-wind"} parameterName={"Wind Speed"} parameterWeather={`${weatherData[0].wind.speed} km/h`}/>
