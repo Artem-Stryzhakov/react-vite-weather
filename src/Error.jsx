@@ -12,6 +12,7 @@ function Error(props) {
 
     useEffect(() => {
         document.addEventListener("keydown", handleKeyPress);
+        document.querySelector("body").style.overflowY = "hidden";
 
         return () => document.addEventListener("keydown", handleKeyPress);
     }, [handleKeyPress]);
