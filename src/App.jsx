@@ -1,11 +1,11 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import DisplayFutureWeather from "./DisplayFutureWeather.jsx";
-import SearchWeatherForm from "./SearchWeatherForm.jsx";
-import LeftContainer from "./LeftContainer.jsx";
-import ParameterWeather from "./ParameterWeather.jsx";
-import Loader from "./Loader.jsx";
-import Error from "./Error.jsx";
+import DisplayFutureWeather from "./components/DisplayFutureWeather.jsx";
+import SearchWeatherForm from "./components/SearchWeatherForm.jsx";
+import LeftContainer from "./components/LeftContainer.jsx";
+import ParameterWeather from "./components/RightContainer.jsx";
+import Loader from "./components/Loader.jsx";
+import Error from "./components/Error.jsx";
 
 import './styles/App.css'
 
@@ -13,6 +13,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFontAwesome } from '@fortawesome/free-brands-svg-icons'
+import RightContainer from "./components/RightContainer.jsx";
 
 library.add(fas, faTwitter, faFontAwesome)
 
@@ -29,23 +30,24 @@ function App() {
     const [isError, setError] = useState(false);
     const [errorInfo, setErrorInfo] = useState("");
 
+    const [toggleMetric, setToggleMetric] = useState(true);
+
+    const handleToggleMetric = (data) => setToggleMetric(data);
+
     useEffect(() => {
-        axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${weather_api}&units=metric`)
+        axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${weather_api}&units=${toggleMetric ? "metric" : "standard"}`)
           .then(response => {
             setError(false);
             setLoading(false);
             setWeatherData(response.data.list.filter((_, index) => index % 8 === 0));
             setCityData(response.data.city);
-            // console.log(response.data);
             setWeatherDesc(response.data.list[0].weather[0].main);
-            setFormSubmit(false);
           })
             .catch(error => {
-                // console.log(error);
                 setError(true)
                 setErrorInfo(error)
             })
-    }, [formSubmit]);
+    }, [formSubmit, toggleMetric]);
 
     if (isLoading) return <Loader />;
 
@@ -55,27 +57,24 @@ function App() {
             {isError ? <Error errorStatus={errorInfo.status} errorMessage={errorInfo.response.data.message}/> : null}
 
             <section className={"top-section"}>
-                <div className={"left-container"}>
-                    <div className={"location-info"}>
-                        <LeftContainer
-                            weatherData={weatherData[0].weather[0].icon}
-                            time={weatherData[0].dt_txt.split(" ")[1]}
-                            status={weatherDesc.charAt(0).toUpperCase() + weatherDesc.slice(1)}
-                            city={cityData.name}
-                            temperature={weatherData[0].main.temp}
-                        />
-                    </div>
-                </div>
+                <LeftContainer
+                    weatherData={weatherData[0].weather[0].icon}
+                    time={weatherData[0].dt_txt.split(" ")[1]}
+                    status={weatherDesc.charAt(0).toUpperCase() + weatherDesc.slice(1)}
+                    city={cityData.name}
+                    temperature={weatherData[0].main.temp}
+                    unit={toggleMetric ? "°C" : "°F"}
+                />
 
-                <div className="center-section">
-                    <SearchWeatherForm setCityName={setCityName} setFormSubmit={setFormSubmit}/>
-                </div>
+                <SearchWeatherForm setCityName={setCityName} setFormSubmit={setFormSubmit} form={formSubmit}/>
 
-                <div className={"right-container"}>
-                    <ParameterWeather iconClass={"fa-solid fa-droplet"} parameterName={"Humidity"} parameterWeather={`${weatherData[0].main.humidity}%`}/>
-                    <ParameterWeather iconClass={"fa-solid fa-cloud"} parameterName={"Air Pressure"} parameterWeather={`${weatherData[0].main.pressure} PS`}/>
-                    <ParameterWeather iconClass={"fa-solid fa-wind"} parameterName={"Wind Speed"} parameterWeather={`${weatherData[0].wind.speed} km/h`}/>
-                </div>
+                <RightContainer
+                    tempunit={toggleMetric ? "Celsius" : "Fahrenheit"}
+                    humidity={weatherData[0].main.humidity}
+                    pressure={weatherData[0].main.pressure}
+                    speed={weatherData[0].wind.speed}
+                    sendToggleData={handleToggleMetric}
+                />
             </section>
 
             <div className="weather-data">
@@ -85,6 +84,7 @@ function App() {
                         dateFormat={data.dt_txt.split(" ")[0]}
                         temperature={data.main.temp}
                         feels_like={data.main.feels_like}
+                        unit={toggleMetric ? "°C" : "°F"}
                     />
                 )}
             </div>

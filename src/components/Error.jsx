@@ -1,4 +1,4 @@
-import "./styles/Error.css"
+import "../styles/Error.css"
 import {useCallback, useEffect} from "react";
 
 function Error(props) {
